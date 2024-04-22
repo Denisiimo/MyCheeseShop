@@ -4,6 +4,7 @@
 @using MyCheeseShop.Model
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
+<link rel="stylesheet" href="./app.css" />
 
 @inject SignInManager<User> SignInManager
 @inject ILogger<Login> Logger
@@ -23,7 +24,7 @@
                     <InputText @bind-Value="Model.Email" class="form-control" placeholder="name@example.com" />
                 </div>
                 <div class="col-md-6">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label hello">Password</label>
                     <InputText type="password" @bind-Value="Model.Password" class="form-control" placeholder="Password" />
                 </div>
                 <div class="col-md-2">
@@ -37,6 +38,43 @@
         </EditForm>
     </div>
 </div>
+
+@*
+<div class="container1">
+    <!-- Sign Up -->
+    <div class="container__form container--signup">
+        <form action="#" class="form1" id="form1">
+            <h2 class="form__title">Sign Up</h2>
+            <input type="text" placeholder="User" class="input1" />
+            <input type="email" placeholder="Email" class="input1" />
+            <input type="password" placeholder="Password" class="input1" />
+            <button class="btn1">Sign Up</button>
+        </form>
+    </div>
+
+    <!-- Sign In -->
+    <div class="container__form container--signin">
+        <form action="#" class="form1" id="form2">
+            <h2 class="form__title">Sign In</h2>
+            <input type="email" placeholder="Email" class="input1" />
+            <input type="password" placeholder="Password" class="input1" />
+            <a href="#" class="link1">Forgot your password?</a>
+            <button class="btn1">Sign In</button>
+        </form>
+    </div>
+    <!-- Overlay -->
+    <div class="container__overlay">
+        <div class="overlay">
+            <div class="overlay__panel overlay--left">
+                <button class="btn1" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay__panel overlay--right">
+                <button class="btn1" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+*@
 
 @code {
     private string? statusMessage;
