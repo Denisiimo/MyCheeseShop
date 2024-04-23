@@ -1,0 +1,33 @@
+﻿@using MyCheeseShop.Model
+
+<div>
+    <img />
+    <ul>
+        <li>@Cheese.Type</li>
+        <li>@Cheese.Strength</li>
+    </ul>
+    <ul>
+        <li>@Cheese.Name</li>
+        <li>@Cheese.Price</li>
+    </ul>
+    <p>
+        @Cheese.Description
+    </p>
+</div>
+
+<EditForm Model="quantity" OnSubmit="AddToCart">
+
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public Cheese Cheese { get; set; }
+
+    private int quantity = 1;
+
+    public async Task AddToCart()
+    {
+        
+    }
+}

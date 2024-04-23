@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<CheeseProvider>();
+
 builder.Services.AddScoped<ShoppingCart>();
 
 builder.Services.AddRazorComponents()
