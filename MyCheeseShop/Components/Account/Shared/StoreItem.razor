@@ -16,7 +16,12 @@
 </div>
 
 <EditForm Model="quantity" OnSubmit="AddToCart">
-
+    <InputSelect class="form-select w-100" @bind-Value="quantity" required>
+        @for (var i = 1; i <= 5; i++)
+        {
+            <option value="@i">@(i * 100)g</option>
+        }
+    </InputSelect>
 </EditForm>
 
 @code {
