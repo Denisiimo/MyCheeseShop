@@ -2,24 +2,48 @@
 @inject NavigationManager NavigationManager
 @inject ProtectedSessionStorage ProtectedSessionStorage
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Total</th>
-        </tr>
-    </thead>
-</table>
+<h1>Your cart</h1>
 
-        
-
-
-        
-
+<div class="row">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="card">
+            <div class="card-body">
+                @foreach (var item in ShoppingCart.GetItems())
+                {
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="/img/@item.Cheese.ImageUrl" class="card-img-top p-1" alt="@item.Cheese.Name" onerror="this.onerror = null; this.src='/img/no_cheese.png'">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title hgg">@item.Cheese.Name</h5>
+                                <p class="card-text">@item.Cheese.Price</p>
+                                @if (IsEditable)
+                                {
+                                    <div class="d-flex items-baseline grid gap-2">
+                                        <button class="btn btn-outline-dark" @onclick="() => AddQuantity(item)">+</button>
+                                        <p class="card-text"><small class="text-body-secondary">@(item.Quantity * 100)g</small></p>
+                                        <button class="btn btn-outline-dark" @onclick="() => RemoveQuantity(item)">-</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h2>@(ShoppingCart.Total().ToString("C"))</h2>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    decimal totalCart = 0;
 
     [Parameter]
     public bool IsEditable { get; set; } = false;
@@ -38,5 +62,20 @@
     private void GoToStore()
     {
         NavigationManager.NavigateTo("/");
+    }
+
+    private void AddQuantity(CartItem item)
+    {
+        ShoppingCart.AddItem(item.Cheese, 1);
+    }
+
+    private void RemoveQuantity(CartItem item)
+    {
+        ShoppingCart.RemoveItem(item.Cheese, 1);
+    }
+
+    private void RemoveItem(CartItem item)
+    {
+        ShoppingCart.RemoveItem(item.Cheese);
     }
 }

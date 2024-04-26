@@ -3,9 +3,26 @@
 @inject NavigationManager NavigationManager
 @inject ShoppingCart ShoppingCart
 
-<a @onclick="GoToCheckout" class="btn btn-outline-primary">Checkout</a>
+@if (ShoppingCart.Count() == 0)
+{
+    <h3>Shopping Cart</h3>
+    <p>Your cart is empty</p>
+    <div>
+        <a @onclick="GoToStore" class="btn btn-outline-primary">Back</a>
+    </div>
+}
+else
+{
+    <a @onclick="GoToCheckout" class="btn btn-outline-primary">Checkout</a>
 
-<CartSummary IsEditable="true"/>
+    <a @onclick="GoToStore" class="btn btn-outline-primary">Back</a>
+
+
+    <CartSummary IsEditable="true" />
+}
+
+
+
 
 @code {
 
