@@ -1,0 +1,26 @@
+﻿@page "/cart"
+@using MyCheeseShop.Components.Account.Shared
+@inject NavigationManager NavigationManager
+@inject ShoppingCart ShoppingCart
+
+<a @onclick="GoToCheckout" class="btn btn-outline-primary">Checkout</a>
+
+<CartSummary IsEditable="true"/>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        ShoppingCart.OnCartUpdated += StateHasChanged;
+    }
+
+    private void GoToStore()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    private void GoToCheckout()
+    {
+        NavigationManager.NavigateTo("/checkout");
+    }
+}

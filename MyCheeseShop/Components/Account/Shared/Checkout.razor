@@ -1,0 +1,23 @@
+﻿﻿@page "/checkout"
+
+@attribute [Authorize]
+@inject UserProvider UserProvider
+@inject OrderProvider OrderProvider
+@inject ShoppingCart ShoppingCart
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+<CartSummary IsEditable="false" />
+
+@code {
+
+    private async Task MakePayment()
+    {
+        await SimulatePayment();
+
+        await OrderProvider.CreateOrder(user, ShoppingCart.GetItems());
+        ShoppingCart.Clear();
+        NavigationManager.NavigateTo("/thank-you");
+    }
+}

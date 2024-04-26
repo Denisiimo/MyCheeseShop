@@ -1,28 +1,46 @@
-﻿@using MyCheeseShop.Model
+﻿@inject ProtectedSessionStorage ProtectedSessionStore
+@inject ShoppingCart ShoppingCart
 
-<div>
-    <img />
-    <ul>
-        <li>@Cheese.Type</li>
-        <li>@Cheese.Strength</li>
-    </ul>
-    <ul>
-        <li>@Cheese.Name</li>
-        <li>@Cheese.Price</li>
-    </ul>
-    <p>
-        @Cheese.Description
-    </p>
+<div class="card h-100">
+    <img src="/img/cheeses/@Cheese.ImageUrl" class="card-img-top p-1" alt="@Cheese.Name" onerror="this.onerror = null; this.src='/img/no_cheese.png'">
+    <div class="card-body d-flex flex-column">
+        <h5>
+            <span class="badge bg-primary">@Cheese.Type</span>
+            <span class="badge bg-success">@Cheese.Strength</span>
+        </h5>
+        <div class="d-flex flex-column flex-sm-row justify-content-between">
+            <h5 class="card-title">@Cheese.Name</h5>
+            <h5><span class="badge bg-danger">@Cheese.Price.ToString("C")</span></h5>
+        </div>
+        <p class="card-text">@Cheese.Description</p>
+        <div class="mt-auto">
+            <EditForm Model="quantity" OnSubmit="AddToCart">
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <InputSelect class="form-select w-100" @bind-Value="quantity" required>
+                            @for (var i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@(i * 100)g</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="col-lg-6 col-12 mt-lg-0 mt-1">
+                        <button class="btn btn-primary position-relative w-100">
+                            Add to cart
+                            @if (ShoppingCart.GetQuantity(Cheese) > 0)
+                            {
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    @(ShoppingCart.GetQuantity(Cheese) * 100)g
+                                    <span class="visually-hidden">@Cheese.Name in shopping cart</span>
+                                </span>
+                            }
+                        </button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
 </div>
-
-<EditForm Model="quantity" OnSubmit="AddToCart">
-    <InputSelect class="form-select w-100" @bind-Value="quantity" required>
-        @for (var i = 1; i <= 5; i++)
-        {
-            <option value="@i">@(i * 100)g</option>
-        }
-    </InputSelect>
-</EditForm>
 
 @code {
 
@@ -33,6 +51,7 @@
 
     public async Task AddToCart()
     {
-        
+        ShoppingCart.AddItem(Cheese, quantity);
+        await ProtectedSessionStore.SetAsync("cart", ShoppingCart.GetItems());
     }
 }

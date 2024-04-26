@@ -10,7 +10,36 @@
         }   
         public void AddItem(Cheese cheese, int quantity)
         {
+            var item = _items.FirstOrDefault(item => item.Cheese.Id == cheese.Id);
+            if (item == null)
+            {
+                _items.Add(new CartItem { Cheese = cheese, Quantity = quantity });
+            }
+            else
+            {
+                item.Quantity += quantity;
+            }
 
+            OnCartUpdated?.Invoke();
+        }
+
+        public IEnumerable<CartItem> GetItems()
+        {
+            return _items;
+        }
+
+        public int GetQuantity(Cheese cheese)
+        {
+            // return the quantity of the cheese in the cart
+            var item = _items.FirstOrDefault(item => item.Cheese.Id == cheese.Id);
+            return item?.Quantity ?? 0;
+        }
+
+        public void SetItems(IEnumerable<CartItem> items)
+        {
+            // set the item in the cart
+            _items = items.ToList();
+            OnCartUpdated?.Invoke();
         }
     }
 }

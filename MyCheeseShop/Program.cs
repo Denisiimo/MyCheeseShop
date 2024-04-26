@@ -12,6 +12,9 @@ builder.Services.AddScoped<CheeseProvider>();
 
 builder.Services.AddScoped<ShoppingCart>();
 
+builder.Services.AddScoped<OrderProvider>();
+
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 

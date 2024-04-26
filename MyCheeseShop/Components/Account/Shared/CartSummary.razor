@@ -1,0 +1,42 @@
+﻿@inject ShoppingCart ShoppingCart
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStorage
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+</table>
+
+        
+
+
+        
+
+
+@code {
+
+    [Parameter]
+    public bool IsEditable { get; set; } = false;
+
+    protected override void OnInitialized()
+    {
+        ShoppingCart.OnCartUpdated += async () => await CartUpdated();
+    }
+
+    private async Task CartUpdated()
+    {
+        StateHasChanged();
+        await ProtectedSessionStorage.SetAsync("cart", ShoppingCart.GetItems());
+    }
+
+    private void GoToStore()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
