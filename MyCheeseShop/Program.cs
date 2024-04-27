@@ -14,6 +14,8 @@ builder.Services.AddScoped<ShoppingCart>();
 
 builder.Services.AddScoped<OrderProvider>();
 
+builder.Services.AddScoped<UserProvider>();
+
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();

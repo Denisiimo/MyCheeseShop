@@ -45,11 +45,11 @@ namespace MyCheeseShop.Context
             await _userManager.RemoveFromRoleAsync(user, "Admin");
         }
 
-        //public async Task<IEnumerable<User>> GetAllUsersAsync()
-        //{
-        //    // Return all users
-        //    return await _context.Users.Include(user => user.Orders)
-        //                 .OrderBy(user => user.LastName).ToListAsync();
-        //}
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            // Return all users
+            return await _context.Users.Include(user => user.Orders)
+                         .OrderBy(user => user.LastName).ToListAsync();
+        }
     }
 }

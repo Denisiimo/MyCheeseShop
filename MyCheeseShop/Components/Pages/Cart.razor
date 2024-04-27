@@ -3,6 +3,8 @@
 @inject NavigationManager NavigationManager
 @inject ShoppingCart ShoppingCart
 
+<h1>Your cart</h1>
+
 @if (ShoppingCart.Count() == 0)
 {
     <h3>Shopping Cart</h3>
@@ -13,10 +15,10 @@
 }
 else
 {
-    <a @onclick="GoToCheckout" class="btn btn-outline-primary">Checkout</a>
 
     <a @onclick="GoToStore" class="btn btn-outline-primary">Back</a>
 
+    <a @onclick="GoToCheckout" class="btn btn-outline-primary">Checkout</a>
 
     <CartSummary IsEditable="true" />
 }
