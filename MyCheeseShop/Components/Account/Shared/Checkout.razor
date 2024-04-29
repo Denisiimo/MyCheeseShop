@@ -11,66 +11,87 @@
 @inject ProtectedSessionStorage ProtectedSessionStore
 
 @* <CartSummary IsEditable="false" /> *@
-<a @onclick="GoToStore" class="btn btn-outline-primary">Store</a>
+<h1 class="orange">Checkout 🧀</h1>
 
-<a @onclick="GoToCart" class="btn btn-outline-primary">Cart</a>
-<div class="row">
-    <div class="col-sm-6 mb-3 mb-sm-0">
-        <div class="card">
-            <div class="card-body">
-                <div class="col-sm">
-                    <div class="d-flex justify-content-between">
-                        <h2 class="card-title">Order Summary</h2>
-                        <h2>Total: @(ShoppingCart.Total().ToString("C"))</h2>
-                    </div>
-                    @foreach (var item in ShoppingCart.GetItems())
-                    {
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="/img/@item.Cheese.ImageUrl" class="card-img-top p-1" alt="@item.Cheese.Name" onerror="this.onerror = null; this.src='/img/no_cheese.png'">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h2 class="card-title">@item.Cheese.Name</h2>
-                                    <p class="card-text fs-4">£@(item.Cheese.Price * item.Quantity)</p>
-                                    <p class="card-text fs-5"><small class="text-body-secondary">@(item.Quantity * 100)g</small></p>
+<div class="mb-2">
+    <a @onclick="GoToStore" class="btn btn-outline-danger">Store</a>
+
+    <a @onclick="GoToCart" class="btn btn-outline-danger">Cart</a>
+</div>
+
+<EditForm EditContext="editContext" OnValidSubmit="MakePayment">
+    <DataAnnotationsValidator />
+    <div class="row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-sm">
+                        <div class="d-flex justify-content-between">
+                            <h2 class="orange">Order Summary</h2>
+                            <h2 class="orange">Total: @(ShoppingCart.Total().ToString("C"))</h2>
+                        </div>
+                        @foreach (var item in ShoppingCart.GetItems())
+                        {
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="/img/@item.Cheese.ImageUrl" class="card-img-top p-1" alt="@item.Cheese.Name" onerror="this.onerror = null; this.src='/img/no_cheese.png'">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h2 class="orange">@item.Cheese.Name</h2>
+                                        <p class="card-text fs-4 orange">£@(item.Cheese.Price * item.Quantity)</p>
+                                        <p class="card-text fs-5"><small class="text-body-secondary">@(item.Quantity * 100)g</small></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
 
-                    @* <CartSummary /> *@
+                        @* <CartSummary /> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    
+                        <h4 class="card-title">Payment</h4>
+                        <div class="form-group mb-1">
+                            <label class="form-label">Name on card</label>
+                            <InputText class="form-control" placeholder="@GetFormattedName(user)" @bind-Value="paymentDetails.NameOnCard" />
+                        </div>
+                        <div class="form-group mb-1">
+                            <label class="form-label">Card number</label>
+                            <InputText class="form-control" placeholder="0000-0000-0000-0000" @bind-Value="paymentDetails.CardNumber" />
+                        </div>
+                        <div class="form-group mb-1">
+                            <label class="form-label">Expiry Date</label>
+                            <InputText class="form-control" placeholder="12/23" @bind-Value="paymentDetails.ExpiryDate" />
+                        </div>
+                        <div class="form-group mb-1">
+                            <label class="form-label">Security Code</label>
+                            <InputText class="form-control mb-2" placeholder="123" @bind-Value="paymentDetails.SecurityCode" />
+                        </div>
+                    
+                    <div>
+                        <button type="submit" class="btn btn-outline-danger">
+                            @if (isPaying)
+                            {
+                                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                            }
+                            else
+                            {
+                                <span>💳</span>
+                            }
+                            <span> Pay Now</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <EditForm EditContext="editContext" OnValidSubmit="MakePayment">
-                    <DataAnnotationsValidator />
-                    <h4 class="card-title">Payment</h4>
-                    <div class="form-group mb-1">
-                        <label class="form-label">Name on card</label>
-                        <InputText class="form-control" placeholder="@GetFormattedName(user)" @bind-Value="paymentDetails.NameOnCard" />
-                    </div>
-                    <div class="form-group mb-1">
-                        <label class="form-label">Card number</label>
-                        <InputText class="form-control" placeholder="0000-0000-0000-0000" @bind-Value="paymentDetails.CardNumber" />
-                    </div>
-                    <div class="form-group mb-1">
-                        <label class="form-label">Expiry Date</label>
-                        <InputText class="form-control" placeholder="12/23" @bind-Value="paymentDetails.ExpiryDate" />
-                    </div>
-                    <div class="form-group mb-1">
-                        <label class="form-label">Security Code</label>
-                        <InputText class="form-control" placeholder="123" @bind-Value="paymentDetails.SecurityCode" />
-                    </div>
-                </EditForm>
-            </div>
-        </div>
-    </div>
-</div>
+</EditForm>
+
 
 
 @code {

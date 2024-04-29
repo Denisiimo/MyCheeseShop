@@ -1,0 +1,26 @@
+﻿@page "/thank-you"
+@attribute [Authorize]
+@inject NavigationManager NavigationManager
+
+<div class="card bg-light text-center">
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="row justify-content-end">
+                <div class="col">
+                    <h3>Thank you for shopping with EasyBriezy!</h3>
+                    <p>Your have just been scammed!</p>
+                    <div>
+                        <button @onclick="GoToStore" class="btn btn-outline-warning">🧀 Back to the cheeses</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private void GoToStore()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

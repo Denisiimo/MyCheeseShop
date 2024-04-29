@@ -80,5 +80,11 @@
             // sum the price of all items in the cart
             return _items.Sum(item => item.Cheese.Price * item.Quantity);
         }
+
+        public decimal TotalGrams()
+        {
+            // sum the price of all items in the cart
+            return _items.Sum(item => item.Quantity);
+        }
     }
 }

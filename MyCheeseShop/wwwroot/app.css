@@ -33,11 +33,5 @@ h1:focus {
 }
 
 .items-baseline {
-    align-items: baseline;
-    
-}
-
-.hgg {
-    color: red;
-    background-color
+    align-items: baseline; 
 }

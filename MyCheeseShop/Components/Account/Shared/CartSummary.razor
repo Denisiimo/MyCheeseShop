@@ -14,8 +14,8 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title hgg">@item.Cheese.Name</h5>
-                                <p class="card-text">£@item.Cheese.Price</p>
+                                <h5 class="orange">@item.Cheese.Name</h5>
+                                <p class="orange card-text">£@item.Cheese.Price</p>
                                 @if (IsEditable)
                                 {
                                     <div class="d-flex items-baseline grid gap-2">
@@ -36,7 +36,9 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h2>Total: @(ShoppingCart.Total().ToString("C"))</h2>
+                    <h2 class="orange">Total: @(ShoppingCart.Total().ToString("C"))</h2>
+                    <h3 class="orange">Total g: @(ShoppingCart.TotalGrams() * 100)g</h3>
+                    <a @onclick="GoToCheckout" class="btn btn-outline-danger">Checkout</a>
                 </div>
             </div>
         </div>
@@ -63,6 +65,11 @@
     private void GoToStore()
     {
         NavigationManager.NavigateTo("/");
+    }
+
+    private void GoToCheckout()
+    {
+        NavigationManager.NavigateTo("/checkout");
     }
 
     private void AddQuantity(CartItem item)

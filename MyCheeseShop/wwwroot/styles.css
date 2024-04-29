@@ -1,0 +1,13 @@
+﻿.input-style {
+    outline-style: solid;
+    outline-color: orange;
+}
+
+.orange {
+    color: orange;
+    font-weight: bold;
+}
+
+.red {
+    color: red;
+}

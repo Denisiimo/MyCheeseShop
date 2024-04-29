@@ -19,7 +19,7 @@ else if (!cheeses.Any())
 <div class="d-flex mb-1 justify-content-between">
     <div class="d-flex">
         <div class="dropdown me-1">
-            <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="btn btn-outline-danger dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Sort by @sortCriteria.ToString()
             </a>
             <ul class="dropdown-menu">
@@ -30,15 +30,15 @@ else if (!cheeses.Any())
             </ul>
         </div>
         <div class="col-sm-8">
-            <input type="text" class="form-control btn-outline-primary" placeholder="Search for cheese..." @bind="searchTerm" @bind:event="oninput" />
+            <input type="text" class="form-control btn-outline-danger" placeholder="Search for cheese..." @bind="searchTerm" @bind:event="oninput" />
         </div>
     </div>
     <div class="mt-2 mt-md-0">
-        <a @onclick="GoToCart" class="btn btn-outline-primary">Cart</a>
+        <a @onclick="GoToCart" class="btn btn-outline-danger">Cart</a>
     </div>
 </div>
 
-<div class="row row-cols-1 row-cols-md-4 g-4 d-flex align-items-center flex-column mb-2">
+@* <div class="row row-cols-1 row-cols-md-4 g-4 d-flex align-items-center flex-column mb-2">
     <div class="card">
         <h1 class="mb-3 text-center">Top sellers</h1>
         <div id="carouselExampleCaptions" class="carousel slide pb-1">
@@ -80,9 +80,9 @@ else if (!cheeses.Any())
             </button>
         </div>
     </div>
-</div>
+</div> *@
 
-<div class="row row-cols-1 row-cols-md-4 g-4">
+<div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var cheese in FilteredCheeses)
     {
         <div class="col">
