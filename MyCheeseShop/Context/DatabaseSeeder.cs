@@ -21,7 +21,14 @@ namespace MyCheeseShop.Context
         {
             await _context.Database.MigrateAsync();
 
-            if(!_context.Users.Any())
+            if (!_context.Cheeses.Any())
+            {
+                var cheeses = GetCheeses();
+                _context.Cheeses.AddRange(cheeses);
+                await _context!.SaveChangesAsync();
+            }
+
+            if (!_context.Users.Any())
             {
                 await _roleManager.CreateAsync(new IdentityRole("Admin"));
                 await _roleManager.CreateAsync(new IdentityRole("Customer"));
@@ -32,20 +39,16 @@ namespace MyCheeseShop.Context
                 var admin = new User
                 {
                     UserName = adminEmail,
-                    Email = adminPassword,
+                    Email = adminEmail,
                     FirstName = "Admin",
                     LastName = "User",
                     Address = "123 Admin Street",
                     City = "Adminville",
                     PostCode = "AD12 MIN"
                 };
-            }
-            
-            if (!_context.Cheeses.Any())
-            {
-                var cheeses = GetCheeses();
-                _context.Cheeses.AddRange(cheeses);
-                await _context!.SaveChangesAsync();
+
+                await _userManager.CreateAsync(admin, adminPassword);
+                await _userManager.AddToRoleAsync(admin, "Admin");
             }
         }
 

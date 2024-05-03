@@ -59,15 +59,15 @@
                     <td><p class="">@Cheese.Description</p></td>
                     <td><p class="orange">£@Cheese.Price</p></td>
                 </tr>
-                <tr>
-                    <h5 class="d-flex mt-auto">
-                        <span class="badge bg-primary">@Cheese.Type</span>
-                        <span class="badge bg-success">@Cheese.Strength</span>
-                    </h5>
-                </tr>
             </tbody>
         </table>
         <div class="mt-auto">
+            <h5 class="d-flex">
+                <span class="badge bg-warning">@Cheese.Type</span>
+                <span class="badge bg-danger">@Cheese.Strength</span>
+            </h5>
+        </div>
+        <div>
             <EditForm Model="quantity" OnSubmit="AddToCart">
                 <div class="row">
                     <div class="col-lg-6 col-12">

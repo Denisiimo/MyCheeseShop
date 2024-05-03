@@ -362,7 +362,7 @@ namespace MyCheeseShop.Migrations
             modelBuilder.Entity("MyCheeseShop.Model.Order", b =>
                 {
                     b.HasOne("MyCheeseShop.Model.User", "User")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -390,6 +390,11 @@ namespace MyCheeseShop.Migrations
             modelBuilder.Entity("MyCheeseShop.Model.Order", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("MyCheeseShop.Model.User", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
