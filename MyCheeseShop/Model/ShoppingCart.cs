@@ -7,7 +7,14 @@
         public ShoppingCart()
         {
             _items = [];
-        }   
+        }
+        public void Clear()
+        {
+            // remove all items from the cart
+            _items.Clear();
+            OnCartUpdated?.Invoke();
+        }
+
         public void AddItem(Cheese cheese, int quantity)
         {
             var item = _items.FirstOrDefault(item => item.Cheese.Id == cheese.Id);
@@ -59,13 +66,6 @@
                 if (item.Quantity <= 0)
                     _items.Remove(item);
             }
-            OnCartUpdated?.Invoke();
-        }
-
-        public void Clear()
-        {
-            // remove all items from the cart
-            _items.Clear();
             OnCartUpdated?.Invoke();
         }
 

@@ -15,6 +15,18 @@ else if (!cheeses.Any())
     <p>No cheeses found</p>
 }
 
+
+
+<label class="switch">
+    <input type="checkbox" checked="checked">
+    <div class="button">
+        <div class="light"></div>
+        <div class="dots"></div>
+        <div class="characters"></div>
+        <div class="shine"></div>
+        <div class="shadow"></div>
+    </div>
+</label>
 <div class="d-flex mb-1 justify-content-between">
     <div class="d-flex">
         <div class="dropdown me-1">
@@ -98,7 +110,7 @@ else if (!cheeses.Any())
     private SortCriteria sortCriteria = SortCriteria.Name;
     private string searchTerm = "";
 
-    private IEnumerable<Cheese> cheeses;
+    private IEnumerable<Cheese> ?cheeses;
 
     private IEnumerable<Cheese> filteredCheeses;
     private IEnumerable<Cheese> FilteredCheeses

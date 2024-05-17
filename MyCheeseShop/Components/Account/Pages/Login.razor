@@ -14,7 +14,7 @@
 <PageTitle>Log in</PageTitle>
 <StatusMessage Message="@statusMessage" IsError="@isError" />
 
-<div class="card">
+@* <div class="card">
     <div class="card-body bg-light">
         <h4 class="card-title">Login</h4>
         <EditForm OnValidSubmit="LoginUser" Model="Model" FormName="loginForm">
@@ -37,43 +37,37 @@
             </div>
         </EditForm>
     </div>
+</div> *@
+
+
+<div class="card">
+    <div class="card-body bg-light">
+        <h4 class="card-title">Login</h4>
+        <EditForm OnValidSubmit="LoginUser" Model="Model" FormName="loginForm">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form__group field">
+                        <InputText @bind-Value="Model.Email" type="input" class="form__field" placeholder="Email" required="" />
+                        <label for="name" class="form__label">Email</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form__group field">
+                        <InputText @bind-Value="Model.Password" type="password" class="form__field" placeholder="Password" required="" />
+                        <label for="password" class="form__label">Password</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                </div>
+                <div class="col-md-2">
+                    <a href="@(NavigationManager.ToAbsoluteUri("Account/Register"))" class="btn btn-success w-100">Register</a>
+                </div>
+            </div>
+        </EditForm>
+    </div>
 </div>
-
-
-@*<div class="container1">
-    <!-- Sign Up -->
-    <div class="container__form container--signup">
-        <form action="#" class="form1" id="form1">
-            <h2 class="form__title">Sign Up</h2>
-            <input type="text" placeholder="User" class="input1" />
-            <input type="email" placeholder="Email" class="input1" />
-            <input type="password" placeholder="Password" class="input1" />
-            <button class="btn1">Sign Up</button>
-        </form>
-    </div>
-
-    <!-- Sign In -->
-    <div class="container__form container--signin">
-        <form action="#" class="form1" id="form2">
-            <h2 class="form__title">Sign In</h2>
-            <input type="email" placeholder="Email" class="input1" />
-            <input type="password" placeholder="Password" class="input1" />
-            <a href="#" class="link1">Forgot your password?</a>
-            <button class="btn1">Sign In</button>
-        </form>
-    </div>
-    <!-- Overlay -->
-    <div class="container__overlay">
-        <div class="overlay">
-            <div class="overlay__panel overlay--left">
-                <button class="btn1" id="signIn">Sign In</button>
-            </div>
-            <div class="overlay__panel overlay--right">
-                <button class="btn1" id="signUp">Sign Up</button>
-            </div>
-        </div>
-    </div>
-</div>*@
 
 
 @code {

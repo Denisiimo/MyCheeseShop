@@ -1,9 +1,94 @@
 ﻿@page "/all-orders"
+@using MyCheeseShop.Components.Shared
 @attribute [Authorize(Roles = "Admin")]
 @inject OrderProvider OrderProvider
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserProvider UserProvider
 
 <h3>All Orders</h3>
 
-@code {
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Date</th>
+            <th scope="col">User</th>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in FilteredOrders)
+        {
+            <tr>
+                <th>@item.Id</th>
+                <td>@item.Created.ToString("dd MMMM yyyy")</td>
+                <th>@item.User.FirstName @item.User.LastName</th>
+                <td>£@item.Total</td>
+                <td>
+                    <button type="button" class="btn btn-warning orange" @onclick="() => ShowDetails(item)">
+                        More
+                    </button>
+                </td>
+            </tr>
+        }
 
+        
+    </tbody>
+</table>
+@if (detailsVisible)
+{
+    <OrderDetails Order="selectedOrder" />
+}
+
+@code {
+    private IEnumerable<Order>? orders;
+    private OrderStatus selectedFilter = OrderStatus.None;
+
+    [Parameter]
+    public string UserId { get; set; }
+
+    bool detailsVisible = false;
+    bool buttonVisible = true;
+
+    private User? user;
+
+    private Order? selectedOrder;
+
+    protected async override Task OnInitializedAsync()
+    {
+        // Get the user and their orders if a UserId is provided
+        if (!string.IsNullOrWhiteSpace(UserId))
+        {
+            user = await UserProvider.GetUserByIdAsync(UserId);
+            orders = await OrderProvider.GetOrdersAsync(user);
+        }
+        else
+        {
+            orders = await OrderProvider.GetAllOrdersAsync();
+        }
+
+        selectedOrder = FilteredOrders?.FirstOrDefault();
+    }
+
+    private void FilterOrders(OrderStatus status)
+    {
+        selectedFilter = status;
+        selectedOrder = FilteredOrders?.FirstOrDefault();
+    }
+
+    private void ShowDetails(Order order)
+    {
+        buttonVisible = false;
+        detailsVisible = true;
+        selectedOrder = order;
+    }
+
+    private IEnumerable<Order>? FilteredOrders => orders?.Where(order => selectedFilter switch
+    {
+        OrderStatus.Placed => order.Status == OrderStatus.Placed,
+        OrderStatus.Dispatched => order.Status == OrderStatus.Dispatched,
+        OrderStatus.Cancelled => order.Status == OrderStatus.Cancelled,
+        _ => true
+    });
 }

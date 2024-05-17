@@ -22,6 +22,7 @@
                                         <button style="--bs-btn-hover-bg: orange;" class="btn btn-outline-dark" @onclick="() => RemoveQuantity(item)">-</button>
                                         <p class="card-text"><small class="text-body-secondary">@(item.Quantity * 100)g</small></p>
                                         <button style="--bs-btn-hover-bg: orange;" class="btn btn-outline-dark" @onclick="() => AddQuantity(item)">+</button>
+                                        <button style="--bs-btn-hover-bg: orange;" class="btn btn-outline-dark" @onclick="() => RemoveItem(item)">Clear</button>
                                     </div>
                                 }
                             </div>
@@ -86,4 +87,5 @@
     {
         ShoppingCart.RemoveItem(item.Cheese);
     }
+
 }
